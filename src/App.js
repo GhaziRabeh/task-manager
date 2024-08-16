@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import TaskProvider  from './TaskProvider';
+import { TaskContext } from './TaskProvider';
+import TaskForm from './TaskForm';
+import TaskList from './TaskList';
+import './App.css'; 
 
-function App() {
+const AppContent = () => {
+  const { isDarkMode, toggleTheme } = useContext(TaskContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={isDarkMode ? 'dark-mode' : 'light-mode'}>
+      <div className="container">
+        <h1>Task Manager</h1>
+        <button onClick={toggleTheme}>
+          Switch to {isDarkMode ? 'Light' : 'Dark'} Mode
+        </button>
+        <TaskForm />
+        <TaskList />
+      </div>
     </div>
   );
-}
+};
+
+const App = () => {
+  return (
+    <TaskProvider>
+      <AppContent />
+    </TaskProvider>
+  );
+};
 
 export default App;
